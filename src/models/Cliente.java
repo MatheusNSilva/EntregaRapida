@@ -17,12 +17,12 @@ public class Cliente {
     private int idade;
     private String endereco;
     private String telefone;
-    private Regiao regiao;
+    private String regiao;
 
     public Cliente() {
     }
 
-    public Cliente(int total_pedidos, int documento, String nome, int idade, String endereco, String telefone, Regiao regiao) {
+    public Cliente(int total_pedidos, int documento, String nome, int idade, String endereco, String telefone, String regiao) {
         this.total_pedidos = total_pedidos;
         this.documento = documento;
         this.nome = nome;
@@ -80,11 +80,11 @@ public class Cliente {
         this.telefone = telefone;
     }
 
-    public Regiao getRegiao() {
+    public String getRegiao() {
         return regiao;
     }
 
-    public void setRegiao(Regiao regiao) {
+    public void setRegiao(String regiao) {
         this.regiao = regiao;
     }
 }

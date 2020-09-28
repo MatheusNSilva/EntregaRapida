@@ -9,14 +9,14 @@ public class Cliente_controller {
 
     private ArrayList<Cliente> clientes = new ArrayList();
 
-
     public Cliente_controller() {
     }
 
-    public void cadastrar_cliente(int total_pedidos, int documento, String nome, int idade, String endereco, String telefone, Regiao regiao) {
+    public void cadastrar_cliente(int total_pedidos, int documento, String nome, int idade, String endereco, String telefone, String regiao) {
         Cliente novoCliente = new Cliente(total_pedidos, documento, nome, idade, endereco, telefone, regiao);
         int idade_minima = 16;
-        if (novoCliente.getIdade() >= idade_minima) {
+
+        if (documento != 0 && !nome.isEmpty() && idade >= idade_minima && !endereco.isEmpty() && !telefone.isEmpty() && !regiao.isEmpty()) {
             clientes.add(clientes.size(), novoCliente);
         } else {
             throw new Error("Cliente não tem idade mínima necessaria");
