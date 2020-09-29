@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class Cadastro_cliente implements ActionListener {
+public class Cadastro_cliente extends JFrame {
     private JButton btNovo;
     private JButton btCancelar;
     private JButton btEditar;
@@ -22,26 +22,41 @@ public class Cadastro_cliente implements ActionListener {
 
     //
 
+
+/*    public Cadastro_cliente() {
+    }*/
+
+
+    public Cadastro_cliente() {
+        btNovo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String documentoString = jtIdentidade.getSelectedText();
+                int documento = Integer.parseInt(documentoString);
+                String nome = jtNome.getSelectedText();
+                String idadeString = jtIdade.getSelectedText();
+                int idade = Integer.parseInt(idadeString);
+                String telefone = jtTelefone.getSelectedText();
+                String endereco = jtEndereco.getSelectedText();
+                String regiao = cbRegioes.getSelectedItem().toString();
+                cliente_controller.cadastrar_cliente(0, documento, nome, idade, telefone, endereco, regiao);
+            }
+        });
+    }
+
     private void createUIComponents() {
         // TODO: place custom component creation code here
 
-        btNovo.addActionListener(this);
+        //btNovo.addActionListener(this);
 
 
-        cbRegioes.setModel(new javax.swing.DefaultComboBoxModel(Regiao.values()));
+        //cbRegioes.setModel(new javax.swing.DefaultComboBoxModel(Regiao.values()));
     }
 
 
-    public void actionPerformed(ActionEvent e) {
-        String documentoString = jtIdentidade.getSelectedText();
-        int documento = Integer.parseInt(documentoString);
-        String nome = jtNome.getSelectedText();
-        String idadeString = jtIdade.getSelectedText();
-        int idade = Integer.parseInt(idadeString);
-        String telefone = jtTelefone.getSelectedText();
-        String endereco = jtEndereco.getSelectedText();
-        String regiao = cbRegioes.getSelectedItem().toString();
-        this.cliente_controller.cadastrar_cliente(0, documento, nome, idade, telefone, endereco, regiao);
 
-    }
+   /* public void actionPerformed(ActionEvent e) {
+
+
+    }*/
 }
