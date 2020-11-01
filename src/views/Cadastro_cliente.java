@@ -1,62 +1,62 @@
 package views;
 
 import javax.swing.*;
-import controllers.Cliente_controller;
-import models.Regiao;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import connection.ConnectionFactory;
+import controllers.Cliente_controller;
+import views.Lista_cliente;
+import java.sql.*;
 
-public class Cadastro_cliente extends JFrame {
-    private JButton btNovo;
-    private JButton btCancelar;
-    private JButton btEditar;
-    private JComboBox<Regiao>cbRegioes;
-    private JTextField jtNome;
-    private JTextField jtIdade;
-    private JTextField jtIdentidade;
-    private JTextField jtTelefone;
-    private JTextField jtEndereco;
-    Cliente_controller cliente_controller = new Cliente_controller();
+public class Cadastro_cliente extends JFrame{
+    private JPanel PanelCadastro_Cliente;
+    private JButton btnCadastrar;
+    private JButton btnAtualizar;
+    private JButton btnVoltar;
+    private JTextField tfNome;
+    private JTextField tfIdade;
+    private JTextField tfDocumento;
+    private JTextField tfTelefone;
+    private JTextField tfEndereco;
+    private JComboBox cdRegioes;
+    //Cliente_controller cliente_controller = new Cliente_controller();
+    //Lista_cliente TelaLista_cliente= new Lista_cliente("Voltar para a  Lista");
 
-    //
+    public Cadastro_cliente(String titulo) {
+        super(titulo);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setContentPane(PanelCadastro_Cliente);
+        this.pack();
 
 
-/*    public Cadastro_cliente() {
-    }*/
-
-
-    public Cadastro_cliente() {
-        btNovo.addActionListener(new ActionListener() {
+        btnCadastrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String documentoString = jtIdentidade.getSelectedText();
-                int documento = Integer.parseInt(documentoString);
-                String nome = jtNome.getSelectedText();
-                String idadeString = jtIdade.getSelectedText();
-                int idade = Integer.parseInt(idadeString);
-                String telefone = jtTelefone.getSelectedText();
-                String endereco = jtEndereco.getSelectedText();
-                String regiao = cbRegioes.getSelectedItem().toString();
-                cliente_controller.cadastrar_cliente(0, documento, nome, idade, telefone, endereco, regiao);
+
             }
         });
     }
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+        JFrame frame = new Cadastro_cliente("Cadastro de Clientes");
+        frame.setVisible(true);
 
-        //btNovo.addActionListener(this);
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        Connection connection = connectionFactory.recuperaConexao();
+
+        Statement stm = connection.createStatement();
+        stm.execute("SELECT * FROM pedido");
+        System.out.println("testtando conexão");
+
+        ResultSet resultSet = stm.getResultSet();
+        while (resultSet.next()) {
+            Integer id = resultSet.getInt("id");
+            String lista_itens = resultSet.getString("lista_itens");
+        }
+        connection.close();
 
 
-        //cbRegioes.setModel(new javax.swing.DefaultComboBoxModel(Regiao.values()));
+
     }
-
-
-
-   /* public void actionPerformed(ActionEvent e) {
-
-
-    }*/
 }

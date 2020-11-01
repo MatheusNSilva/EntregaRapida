@@ -6,46 +6,55 @@
 
 package models;
 
+import java.sql.Timestamp;
+
 /**
  *
  * @author mathe
  */
 public class Cliente {
-    private int total_pedidos;
-    private int documento;
+    private int id;
     private String nome;
-    private int idade;
+    private String cpf;
+    private Timestamp idade;
+    private boolean prioritario;
     private String endereco;
     private String telefone;
     private String regiao;
+    private int total_pedidos;
 
     public Cliente() {
     }
 
-    public Cliente(int total_pedidos, int documento, String nome, int idade, String endereco, String telefone, String regiao) {
-        this.total_pedidos = total_pedidos;
-        this.documento = documento;
+    public Cliente(String nome, String cpf, Timestamp idade, boolean prioritario, String endereco, String telefone, String regiao, int total_pedidos) {
         this.nome = nome;
+        this.cpf = cpf;
         this.idade = idade;
+        this.prioritario = prioritario;
         this.endereco = endereco;
         this.telefone = telefone;
         this.regiao = regiao;
-    }
-
-    public int getTotal_pedidos() {
-        return total_pedidos;
-    }
-
-    public void setTotal_pedidos(int total_pedidos) {
         this.total_pedidos = total_pedidos;
     }
 
-    public int getDocumento() {
-        return documento;
+    public Cliente(int id, String nome, String cpf, Timestamp idade, boolean prioritario, String endereco, String telefone, String regiao, int total_pedidos) {
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.idade = idade;
+        this.prioritario = prioritario;
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.regiao = regiao;
+        this.total_pedidos = total_pedidos;
     }
 
-    public void setDocumento(int documento) {
-        this.documento = documento;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -56,12 +65,28 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public int getIdade() {
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public Timestamp getIdade() {
         return idade;
     }
 
-    public void setIdade(int idade) {
+    public void setIdade(Timestamp idade) {
         this.idade = idade;
+    }
+
+    public boolean isPrioritario() {
+        return prioritario;
+    }
+
+    public void setPrioritario(boolean prioritario) {
+        this.prioritario = prioritario;
     }
 
     public String getEndereco() {
@@ -86,5 +111,27 @@ public class Cliente {
 
     public void setRegiao(String regiao) {
         this.regiao = regiao;
+    }
+
+    public int getTotal_pedidos() {
+        return total_pedidos;
+    }
+
+    public void setTotal_pedidos(int total_pedidos) {
+        this.total_pedidos = total_pedidos;
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", idade=" + idade +
+                ", prioritario=" + prioritario +
+                ", endereco='" + endereco + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", regiao='" + regiao + '\'' +
+                ", total_pedidos=" + total_pedidos +
+                '}';
     }
 }
