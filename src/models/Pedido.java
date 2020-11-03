@@ -12,14 +12,14 @@ public class Pedido {
     private String regiao;
     private Timestamp registro_lancamento;
     private boolean restricao_idade;
-    private Veiculo veiculo;
-    private float valor_entrega;
-    private Status status;
+    private String veiculo;
+    private float valor_total;
+    private String status;
 
     public Pedido() {
     }
 
-    public Pedido(Cliente cliente, Entregador entregador, String lista_itens, float valor_pedido, String regiao, Timestamp registro_lancamento, boolean restricao_idade, Veiculo veiculo, float valor_entrega, Status status) {
+    public Pedido(Cliente cliente, Entregador entregador, String lista_itens, boolean restricao_idade, Timestamp registro_lancamento, String regiao, String status, String veiculo, float valor_pedido, float valor_total) {
         this.cliente = cliente;
         this.entregador = entregador;
         this.lista_itens = lista_itens;
@@ -28,7 +28,21 @@ public class Pedido {
         this.registro_lancamento = registro_lancamento;
         this.restricao_idade = restricao_idade;
         this.veiculo = veiculo;
-        this.valor_entrega = valor_entrega;
+        this.valor_total = valor_total;
+        this.status = status;
+    }
+
+    public Pedido(int id, Cliente cliente, Entregador entregador, String lista_itens, boolean restricao_idade, Timestamp registro_lancamento, String regiao, String status, String veiculo, float valor_pedido, float valor_total) {
+        this.id = id;
+        this.cliente = cliente;
+        this.entregador = entregador;
+        this.lista_itens = lista_itens;
+        this.valor_pedido = valor_pedido;
+        this.regiao = regiao;
+        this.registro_lancamento = registro_lancamento;
+        this.restricao_idade = restricao_idade;
+        this.veiculo = veiculo;
+        this.valor_total = valor_total;
         this.status = status;
     }
 
@@ -88,7 +102,7 @@ public class Pedido {
         this.registro_lancamento = registro_lancamento;
     }
 
-    public boolean isRestricao_idade() {
+    public boolean getRestricao_idade() {
         return restricao_idade;
     }
 
@@ -96,29 +110,44 @@ public class Pedido {
         this.restricao_idade = restricao_idade;
     }
 
-    public Veiculo getVeiculo() {
+    public String getVeiculo() {
         return veiculo;
     }
 
-    public void setVeiculo(Veiculo veiculo) {
+    public void setVeiculo(String veiculo) {
         this.veiculo = veiculo;
     }
 
-    public float getValor_entrega() {
-        return valor_entrega;
+    public float getValor_total() {
+        return valor_total;
     }
 
-    public void setValor_entrega(float valor_entrega) {
-        this.valor_entrega = valor_entrega;
+    public void setValor_total(float valor_entrega) {
+        this.valor_total = valor_total;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "id=" + id +
+                ", cliente=" + cliente +
+                ", entregador=" + entregador +
+                ", lista_itens='" + lista_itens + '\'' +
+                ", valor_pedido=" + valor_pedido +
+                ", regiao='" + regiao + '\'' +
+                ", registro_lancamento=" + registro_lancamento +
+                ", restricao_idade=" + restricao_idade +
+                ", veiculo='" + veiculo + '\'' +
+                ", valor_total=" + valor_total +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

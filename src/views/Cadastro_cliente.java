@@ -5,8 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import connection.ConnectionFactory;
-import controllers.Cliente_controller;
-import views.Lista_cliente;
+
 import java.sql.*;
 
 public class Cadastro_cliente extends JFrame{

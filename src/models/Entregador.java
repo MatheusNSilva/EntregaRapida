@@ -11,20 +11,46 @@ package models;
  * @author mathe
  */
 public class Entregador {
+    private int id;
+    private String cpf;
     private String nome;
-    private int idade;
+    private String regiao;
+    private boolean maior_idade;
     private String cnh;
-    private Veiculo veiculo;
+    private String veiculo;
     private String telefone;
-    private Regiao regiao;
 
-    public Entregador(String nome, int idade, String cnh, Veiculo veiculo, String telefone, Regiao regiao) {
+
+    public Entregador() {
+    }
+
+    public Entregador(String nome, String cpf, String telefone, String regiao, String veiculo, boolean maior_idade, String cnh) {
         this.nome = nome;
-        this.idade = idade;
+        this.maior_idade = maior_idade;
         this.cnh = cnh;
+        this.cpf = cpf;
         this.veiculo = veiculo;
         this.telefone = telefone;
         this.regiao = regiao;
+    }
+
+    public Entregador(int id, String nome, String cpf, String telefone, String regiao, String veiculo, boolean maior_idade, String cnh) {
+        this.id = id;
+        this.nome = nome;
+        this.maior_idade = maior_idade;
+        this.cnh = cnh;
+        this.cpf = cpf;
+        this.veiculo = veiculo;
+        this.telefone = telefone;
+        this.regiao = regiao;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -35,12 +61,12 @@ public class Entregador {
         this.nome = nome;
     }
 
-    public int getIdade() {
-        return idade;
+    public boolean isMaior_idade() {
+        return maior_idade;
     }
 
-    public void setIdade(int idade) {
-        this.idade = idade;
+    public void setMaior_idade(boolean maior_idade) {
+        this.maior_idade = maior_idade;
     }
 
     public String getCnh() {
@@ -51,27 +77,49 @@ public class Entregador {
         this.cnh = cnh;
     }
 
-    public Veiculo getVeiculo() {
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getVeiculo() {
         return veiculo;
     }
 
-    public void setVeiculo(Veiculo veiculo) {
+    public void setVeiculo(String veiculo) {
         this.veiculo = veiculo;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
     }
 
     public String getTelefone() {
         return telefone;
     }
 
-    public Regiao getRegião() {
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getRegiao() {
         return regiao;
     }
 
-    public void setRegião(Regiao regiao) {
+    public void setRegiao(String regiao) {
         this.regiao = regiao;
+    }
+
+    @Override
+    public String toString() {
+        return "Entregador{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", regiao='" + regiao + '\'' +
+                ", veiculo=" + veiculo +
+                ", maior_idade=" + maior_idade +
+                ", cnh='" + cnh + '\'' +
+                '}';
     }
 }
