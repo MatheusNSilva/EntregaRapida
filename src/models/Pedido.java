@@ -14,32 +14,30 @@ public class Pedido {
     private boolean restricao_idade;
     private String veiculo;
     private float valor_total;
-    private String status;
+    private Status status;
 
     public Pedido() {
     }
 
-    public Pedido(Cliente cliente, Entregador entregador, String lista_itens, boolean restricao_idade, Timestamp registro_lancamento, String regiao, String status, String veiculo, float valor_pedido, float valor_total) {
+    public Pedido(Cliente cliente, Entregador entregador, String lista_itens, float valor_pedido, String regiao, boolean restricao_idade, String veiculo, float valor_total, Status status) {
         this.cliente = cliente;
         this.entregador = entregador;
         this.lista_itens = lista_itens;
         this.valor_pedido = valor_pedido;
         this.regiao = regiao;
-        this.registro_lancamento = registro_lancamento;
         this.restricao_idade = restricao_idade;
         this.veiculo = veiculo;
         this.valor_total = valor_total;
         this.status = status;
     }
 
-    public Pedido(int id, Cliente cliente, Entregador entregador, String lista_itens, boolean restricao_idade, Timestamp registro_lancamento, String regiao, String status, String veiculo, float valor_pedido, float valor_total) {
+    public Pedido(int id, Cliente cliente, Entregador entregador, String lista_itens, float valor_pedido, String regiao, boolean restricao_idade, String veiculo, float valor_total, Status status) {
         this.id = id;
         this.cliente = cliente;
         this.entregador = entregador;
         this.lista_itens = lista_itens;
         this.valor_pedido = valor_pedido;
         this.regiao = regiao;
-        this.registro_lancamento = registro_lancamento;
         this.restricao_idade = restricao_idade;
         this.veiculo = veiculo;
         this.valor_total = valor_total;
@@ -102,7 +100,7 @@ public class Pedido {
         this.registro_lancamento = registro_lancamento;
     }
 
-    public boolean getRestricao_idade() {
+    public boolean isRestricao_idade() {
         return restricao_idade;
     }
 
@@ -122,15 +120,15 @@ public class Pedido {
         return valor_total;
     }
 
-    public void setValor_total(float valor_entrega) {
+    public void setValor_total(float valor_total) {
         this.valor_total = valor_total;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

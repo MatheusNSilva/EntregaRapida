@@ -4,4 +4,7 @@ public enum Status {
     ABERTO,
     EM_ENTREGA,
     FECHADO;
+
+    Status() {
+    }
 }

@@ -2,6 +2,7 @@ package controllers;
 import daos.ClienteDAO;
 import models.Cliente;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
@@ -18,9 +19,16 @@ public class ClienteController {
     public ClienteController() {
     }
 
-    public Cliente buscaClientePorCPF(String cpf) throws SQLException {
+    public Cliente buscaClientePorCPF(String cpf) throws Exception {
         Cliente cliente = new Cliente();
-        return  cliente = clienteDAO.buscaClientePorCPF(cpf);
+
+        if(clienteDAO.buscaClientePorCPF(cpf) != null) {
+            cliente = clienteDAO.buscaClientePorCPF(cpf);
+        }
+        else {
+            throw new Exception("Não existe cliente com este CPF");
+        }
+        return cliente;
     }
 
 

@@ -10,7 +10,9 @@ public class ClienteDAO {
     private Connection connection;
 
     public ClienteDAO(Connection connection) {
-        this.connection = connection;
+    }
+
+    public ClienteDAO() {
     }
 
     public void salvar(Cliente cliente) throws SQLClientInfoException {
@@ -49,14 +51,11 @@ public class ClienteDAO {
         Timestamp timestamp = Timestamp.from(instant);
         Cliente cliente = new Cliente("","", timestamp,false,"","","",0);
 
-        System.out.println("Cheguei aqui");
         try(PreparedStatement pstm = connection.prepareStatement(sql)) {
-            System.out.println("Cheguei aqui tbm");
             pstm.setString(1, cpf);
             pstm.execute();
 
             try(ResultSet rst = pstm.getResultSet()){
-                System.out.println("Cheguei loucao");
                     if (rst != null) {
                         while (rst.next()) {
                             cliente = new Cliente(rst.getInt(1),rst.getString(2), rst.getString(3), rst.getTimestamp(4),rst.getBoolean(5),
