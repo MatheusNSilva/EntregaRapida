@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Entregador;
 import models.Pedido;
 
 import java.util.ArrayList;
@@ -14,6 +15,72 @@ public class GerenciadorEntregasController {
     }
 
     public void adicionaPedidoNaFila(Pedido pedido, boolean prioridade) {
+        if (prioridade) {
+            lista_prioritaria.add(pedido);
+            System.out.println("Prioritario");
+        } else {
+            lista_comum.add(pedido);
+            System.out.println("Comum");
+        }
 
     }
+
+    public Entregador definiEntregador(List<Entregador> entregadores, boolean prioridade) {
+        List<Entregador> entregadoresIndisponiveis = new ArrayList<Entregador>();
+        Entregador entregadorSelecionado = new Entregador();
+        if (prioridade) {
+            if (lista_prioritaria.isEmpty()) {
+                entregadorSelecionado = entregadores.get(0);
+            } else {
+                for(int posicao = 0; posicao < lista_prioritaria.size(); posicao++) {
+                    for(int entregadorIndex = 0; entregadorIndex < entregadores.size(); entregadorIndex++) {
+                        if((lista_prioritaria.get(posicao).getEntregador()).equals(entregadores.get(entregadorIndex))){
+                            entregadoresIndisponiveis.add(entregadores.get(entregadorIndex));
+                        }
+                    }
+                }
+                if (entregadoresIndisponiveis.containsAll(entregadores)) {
+                    entregadorSelecionado = entregadoresIndisponiveis.get(entregadoresIndisponiveis.size()-1);
+                }
+                else {
+                    int index = 0;
+                    while (entregadoresIndisponiveis.size() > entregadores.size()) {
+                        index --;
+                        if (!entregadoresIndisponiveis.contains(entregadores.get(entregadores.size()-index))) {
+                            entregadorSelecionado = entregadores.get(entregadores.size()-index);
+                        }
+                    }
+                }
+            }
+
+        } else {
+            if (lista_comum.isEmpty()) {
+                entregadorSelecionado = entregadores.get(0);
+            } else {
+                for(int posicao = 0; posicao < lista_comum.size(); posicao++) {
+                    for(int entregadorIndex = 0; entregadorIndex < entregadores.size(); entregadorIndex++) {
+                        if((lista_comum.get(posicao).getEntregador()).equals(entregadores.get(entregadorIndex))){
+                            entregadoresIndisponiveis.add(entregadores.get(entregadorIndex));
+                        }
+                    }
+                }
+                if (entregadoresIndisponiveis.containsAll(entregadores)) {
+                    entregadorSelecionado = entregadoresIndisponiveis.get(entregadoresIndisponiveis.size()-1);
+                }
+                else {
+                    int index = 0;
+                    while (entregadoresIndisponiveis.size() > entregadores.size()) {
+                        index --;
+                        if (!entregadoresIndisponiveis.contains(entregadores.get(entregadores.size()-index))) {
+                            entregadorSelecionado = entregadores.get(entregadores.size()-index);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return entregadorSelecionado;
+    }
+
 }

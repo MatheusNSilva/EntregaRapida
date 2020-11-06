@@ -16,19 +16,18 @@ public class ClienteController {
     private Connection connection;
     private ClienteDAO clienteDAO = new ClienteDAO(connection);
 
-    public ClienteController() {
+    public ClienteController() throws SQLException {
     }
 
     public Cliente buscaClientePorCPF(String cpf) throws Exception {
-        Cliente cliente = new Cliente();
+        Cliente cliente = clienteDAO.buscaClientePorCPF(cpf);
 
-        if(clienteDAO.buscaClientePorCPF(cpf) != null) {
-            cliente = clienteDAO.buscaClientePorCPF(cpf);
+        if(cliente != null) {
+            return cliente;
         }
         else {
             throw new Exception("Não existe cliente com este CPF");
         }
-        return cliente;
     }
 
 

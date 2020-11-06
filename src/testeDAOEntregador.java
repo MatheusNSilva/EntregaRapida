@@ -24,13 +24,16 @@ public class testeDAOEntregador {
         //entregadorList = entregadorDAO.buscaEntregadoresHabilitados(true, "Moto", "Rio Vermelho");
         //entregadorList.stream().forEach(le -> System.out.println(le));
 
-        entregadorList = entregadorDAO.listaTodos();
-        entregadorList.stream().forEach(le -> System.out.println(le));
+        //entregadorList = entregadorDAO.listaTodos();
+        //entregadorList.stream().forEach(le -> System.out.println(le));
 
-        boolean test = entregadorDAO.verificaEntregadoresPorRegiao("jij");
-        System.out.println(test);
+        //boolean test = entregadorDAO.verificaEntregadoresPorRegiao("jij");
+        //System.out.println(test);
 
-        entregadorList = entregadorDAO.buscaEntregadoresHabilitados(true,"Moto", "Rio Vermelho");
-        entregadorList.stream().forEach(le -> System.out.println(le));
+        //entregadorList = entregadorDAO.buscaEntregadoresHabilitados(true,"Moto", "Rio Vermelho");
+        //entregadorList.stream().forEach(le -> System.out.println(le));
+
+        Entregador entregador = entregadorDAO.buscaEntregadorPorId(1);
+        System.out.println(entregador.toString());
     }
 }

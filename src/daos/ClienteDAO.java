@@ -1,18 +1,19 @@
 package daos;
 
 import java.sql.*;
-import java.time.Instant;
 
+import connection.ConnectionFactory;
 import models.Cliente;
+
+import javax.swing.*;
 
 public class ClienteDAO {
 
-    private Connection connection;
+    Connection connection;
+
 
     public ClienteDAO(Connection connection) {
-    }
-
-    public ClienteDAO() {
+        this.connection = connection;
     }
 
     public void salvar(Cliente cliente) throws SQLClientInfoException {
@@ -45,13 +46,13 @@ public class ClienteDAO {
         }
     }
 
-    public Cliente buscaClientePorCPF(String cpf) throws SQLException {
+    public Cliente buscaClientePorCPF(String cpf) throws SQLException, Exception {
         String sql = "SELECT * FROM Cliente WHERE CPF = ?";
-        Instant instant = Instant.now();
-        Timestamp timestamp = Timestamp.from(instant);
-        Cliente cliente = new Cliente("","", timestamp,false,"","","",0);
+        Cliente cliente = new Cliente();
 
-        try(PreparedStatement pstm = connection.prepareStatement(sql)) {
+        try {
+            connection = ConnectionFactory.recuperaConexao();
+            PreparedStatement pstm = connection.prepareStatement(sql);
             pstm.setString(1, cpf);
             pstm.execute();
 
@@ -63,11 +64,12 @@ public class ClienteDAO {
                         }
                     }
             }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+        } finally {
+            ConnectionFactory.fechaConexao(connection);
         }
-
+        if(cliente.getNome() == null) {
+            JOptionPane.showMessageDialog(null,"Não existe cliente com este CPF");
+        }
         return cliente;
     }
 
@@ -98,7 +100,7 @@ public class ClienteDAO {
         return cliente;
     }
 
-    public void transformaResultEmCliente(Cliente cliente ,PreparedStatement pstm) throws SQLException {
+    /*public void transformaResultEmCliente(Cliente cliente ,PreparedStatement pstm) throws SQLException {
         try (ResultSet rst = pstm.getResultSet()) {
             if (rst != null) {
                 while (rst.next()) {
@@ -107,6 +109,6 @@ public class ClienteDAO {
                 }
             }
         }
-    }
+    }*/
 }
 

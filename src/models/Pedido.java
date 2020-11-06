@@ -100,7 +100,7 @@ public class Pedido {
         this.registro_lancamento = registro_lancamento;
     }
 
-    public boolean isRestricao_idade() {
+    public boolean getRestricao_idade() {
         return restricao_idade;
     }
 
@@ -148,4 +148,5 @@ public class Pedido {
                 ", status='" + status + '\'' +
                 '}';
     }
+
 }

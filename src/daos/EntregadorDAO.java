@@ -1,5 +1,6 @@
 package daos;
 
+import connection.ConnectionFactory;
 import models.Cliente;
 import models.Entregador;
 import models.Veiculo;
@@ -24,11 +25,13 @@ public class EntregadorDAO {
         this.connection = connection;
     }
 
-    public List<Entregador> listaTodos() throws SQLException {
+    public List<Entregador> listaTodos() throws SQLException, ClassNotFoundException {
         String sql = "SELECT * FROM entregador;";
         List<Entregador> entregadores = new ArrayList<Entregador>();
 
-        try (PreparedStatement pstm = connection.prepareStatement(sql)){
+        try {
+            connection = ConnectionFactory.recuperaConexao();
+            PreparedStatement pstm = connection.prepareStatement(sql);
             pstm.execute();
 
             try (ResultSet rst = pstm.getResultSet()){
@@ -39,15 +42,19 @@ public class EntregadorDAO {
                     entregadores.add(entregador);
                 }
             }
+        } finally {
+            ConnectionFactory.fechaConexao(connection);
         }
         return entregadores;
     }
 
-    public Entregador buscaEntregadorPorId(int id) throws SQLException {
+    public Entregador buscaEntregadorPorId(int id) throws SQLException, ClassNotFoundException {
         String sql = "SELECT * FROM entregador WHERE id = ?";
         Entregador entregador = new Entregador();
 
-        try(PreparedStatement pstm = connection.prepareStatement(sql)) {
+        try {
+            connection = ConnectionFactory.recuperaConexao();
+            PreparedStatement pstm = connection.prepareStatement(sql);
             pstm.setInt(1, id);
             pstm.execute();
 
@@ -59,23 +66,21 @@ public class EntregadorDAO {
                     }
                 }
             }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
+        } finally {
+            ConnectionFactory.fechaConexao(connection);
         }
 
         return entregador;
     }
 
-    public boolean verificaEntregadoresPorRegiao(String regiao) throws SQLException {
+    public boolean verificaEntregadoresPorRegiao(String regiao) throws SQLException, ClassNotFoundException {
         String sql = "SELECT * FROM entregador WHERE regiao LIKE ?";
         boolean existe = false;
         List<Entregador> entregadores = new ArrayList<Entregador>();
 
-        try(PreparedStatement pstm = connection.prepareStatement(sql)) {
+        try {
+            connection = ConnectionFactory.recuperaConexao();
+            PreparedStatement pstm = connection.prepareStatement(sql);
             pstm.setString(1, regiao);
             pstm.execute();
 
@@ -86,6 +91,8 @@ public class EntregadorDAO {
                     entregadores.add(entregador);
                 }
             }
+        } finally {
+            ConnectionFactory.fechaConexao(connection);
         }
 
         if (entregadores.isEmpty())
@@ -96,7 +103,7 @@ public class EntregadorDAO {
         return existe;
     }
 
-    public List<Entregador> buscaEntregadoresHabilitados(boolean restricao_idade, String veiculo, String regiao) throws SQLException {
+    public List<Entregador> buscaEntregadoresHabilitados(boolean restricao_idade, String veiculo, String regiao) throws SQLException, ClassNotFoundException {
         List<Entregador> entregadoresHabilitados = new ArrayList<Entregador>();
         List<Entregador> entregadorList = new  ArrayList<Entregador>();
         EntregadorDAO entregadorDAO = new EntregadorDAO(connection);
@@ -104,7 +111,6 @@ public class EntregadorDAO {
         entregadorList.stream().forEach(entregador -> {
             if (entregador.isMaior_idade() == restricao_idade && entregador.getVeiculo().equals(veiculo) && entregador.getRegiao().contains(regiao)) {
                 entregadoresHabilitados.add(entregador);
-                System.out.println("que loucura");
             }
         });
         if (entregadoresHabilitados.isEmpty())

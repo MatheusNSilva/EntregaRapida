@@ -7,6 +7,7 @@ import models.Pedido;
 import models.Status;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class PedidoController {
     GerenciadorEntregasController gerenciadorEntregasController = new GerenciadorEntregasController();
     Status status;
 
-    public PedidoController() {
+    public PedidoController() throws SQLException {
     }
 
     public float definiValorTotal(float valor_pedido, Cliente cliente) {
@@ -30,7 +31,7 @@ public class PedidoController {
             valor_total = valor_pedido + fretePorRegiao(cliente.getRegiao());
 
         }
-        return valor_total
+        return valor_total;
     }
 
     public float fretePorRegiao(String regiao) {
@@ -80,17 +81,13 @@ public class PedidoController {
     public void salvar(Cliente cliente, String veiculo, String lista_itens, float valor_pedido, boolean restricao_idade) throws Exception {
         float valor_total = definiValorTotal(valor_pedido, cliente);
         Entregador entregador = new Entregador();
-        entregador = definiEntregadorParaEntrega(entregadorController.verificaEntregadoresHabilitados(cliente.getRegiao(), restricao_idade, veiculo));
-        //Pedido pedidoRegistrado = new Pedido(cliente, entregador, lista_itens, restricao_idade, cliente.getRegiao(), .);
-        //gerenciadorEntregasController.adicionaPedidoNaFila(pedidoRegistrado, verificaPrioridade(cliente));
-        //pedidoDAO.salvar(pedidoRegistrado);
-
-    }
-
-    public Entregador definiEntregadorParaEntrega(List<Entregador> entregadores) {
-        Entregador entregadorSelecionado = new Entregador();
-
-        return entregadorSelecionado;
+        if (entregadorController.verificaEntregadorPorRegiao(cliente.getRegiao())) {
+            entregador = gerenciadorEntregasController.definiEntregador(entregadorController.verificaEntregadoresHabilitados(cliente.getRegiao(), restricao_idade, veiculo), verificaPrioridade(cliente));
+            Pedido pedidoRegistrado = new Pedido(cliente, entregador, lista_itens, valor_pedido, cliente.getRegiao(), restricao_idade, veiculo, valor_total, status.ABERTO);
+            gerenciadorEntregasController.adicionaPedidoNaFila(pedidoRegistrado, verificaPrioridade(cliente));
+            pedidoDAO.salvar(pedidoRegistrado);
+            System.out.println("Foi meu querido");
+        }
     }
 
 }

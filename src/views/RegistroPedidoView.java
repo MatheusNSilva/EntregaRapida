@@ -4,6 +4,7 @@ import controllers.ClienteController;
 import controllers.PedidoController;
 import daos.ClienteDAO;
 import models.Cliente;
+import models.Veiculo;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,24 +24,27 @@ public class RegistroPedidoView extends JFrame {
     private JCheckBox cfRestricao_idade;
     private JButton btnSalvar;
 
-    private ClienteController clienteController = new ClienteController();
+    Connection connection;
+    private ClienteDAO clienteDAO = new ClienteDAO(connection);
     private PedidoController pedidoController = new PedidoController();
     Cliente cliente = new Cliente();
+    Veiculo veiculo;
 
-    public RegistroPedidoView(String titulo) {
+    public RegistroPedidoView(String titulo) throws SQLException {
         super(titulo);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(PanelRegistro_pedido);
-
-        tfCpf_cliente = new JTextField();
-        btnSalvar = new JButton("Salvar");
-        //btnBuscarCliente = new JButton("Buscar Cliente");
-
+        cbVeiculos.setModel(new javax.swing.DefaultComboBoxModel<>(veiculo.values()));
 
         btnSalvar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                try {
+                    salvar();
+                }
+                catch (Exception throwables) {
+                    throwables.printStackTrace();
+                }
             }
         });
         btnBuscarCliente.addActionListener(new ActionListener() {
@@ -48,7 +52,7 @@ public class RegistroPedidoView extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 try {
-                    buscaCliente();
+                    buscaCliente(tfCpf_cliente.getText());
                 }
                 catch (Exception throwables) {
                     throwables.printStackTrace();
@@ -57,12 +61,15 @@ public class RegistroPedidoView extends JFrame {
         });
     }
 
-    public void buscaCliente() throws Exception {
+    public void buscaCliente(String test) throws Exception {
         if(!tfCpf_cliente.getText().equals("")) {
-            cliente = clienteController.buscaClientePorCPF(tfCpf_cliente.getText());
+            cliente = clienteDAO.buscaClientePorCPF(tfCpf_cliente.getText());
             tfNome_cliente.setText(cliente.getNome());
+            System.out.println(tfCpf_cliente.getText());
+            System.out.println(cliente.toString());
         }
         else {
+            System.out.println(tfCpf_cliente.getText());
             JOptionPane.showMessageDialog(this, "Campo CPF não preenchido.");
         }
     }
@@ -70,10 +77,12 @@ public class RegistroPedidoView extends JFrame {
     public void salvar() throws Exception{
         if(!tfCpf_cliente.getText().equals("")) {
             Cliente cliente = new Cliente();
-            cliente = clienteController.buscaClientePorCPF(tfCpf_cliente.getText());
+            cliente = clienteDAO.buscaClientePorCPF(tfCpf_cliente.getText());
             float valorPedido = Float.parseFloat(tfValor_pedido.getText());
             boolean restricaoIdade = cfRestricao_idade.isSelected();
-            //pedidoController.salvar(cliente, cbVeiculos, taLista_itens.getText(), valorPedido, restricaoIdade);//tratar combo veiculo
+            String veiculo = cbVeiculos.getSelectedItem().toString();
+            System.out.println(cbVeiculos.getName());
+            pedidoController.salvar(cliente, cbVeiculos.getName(), taLista_itens.getText(), valorPedido, restricaoIdade);//tratar combo veiculo
         }
     }
 }

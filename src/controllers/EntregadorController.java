@@ -18,14 +18,11 @@ public class EntregadorController {
     public EntregadorController() {
     }
 
-    public boolean verificaEntregadorPorRegiao(String regiao) throws Exception {
-        boolean existeEntregador = entregadorDAO.verificaEntregadoresPorRegiao(regiao);
-        if (existeEntregador) {
-            return existeEntregador;
+    public boolean verificaEntregadorPorRegiao(String regiao) throws SQLException, ClassNotFoundException {
+        if (!entregadorDAO.verificaEntregadoresPorRegiao(regiao)) {
+            JOptionPane.showMessageDialog(null,"Não existem entregadores para a região solicitada");
         }
-        else {
-            throw new Exception("Não existem entregadores para a região solicitada");
-        }
+        return entregadorDAO.verificaEntregadoresPorRegiao(regiao);
     }
 
     public List<Entregador> verificaEntregadoresHabilitados(String regiao, boolean restricao_idade, String veiculo) throws Exception{

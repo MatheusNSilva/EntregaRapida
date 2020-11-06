@@ -5,6 +5,5 @@ public enum Status {
     EM_ENTREGA,
     FECHADO;
 
-    Status() {
-    }
+//    Status() {}
 }

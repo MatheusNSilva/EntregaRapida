@@ -4,11 +4,33 @@ import java.sql.*;
 
 public class ConnectionFactory {
 
-    public Connection recuperaConexao() throws SQLException, ClassNotFoundException {
+    private static Connection connection;
 
+    public static Connection recuperaConexao() throws SQLException, ClassNotFoundException {
 
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/entregas?serverTimezone=UTC","root","root");
+        connection  = null;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/entregas?serverTimezone=UTC","root","root");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return connection;
+    }
+
+    public static void fechaConexao(Connection connection) {
+
+        if (connection != null){
+            try {
+                connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
