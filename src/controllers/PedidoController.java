@@ -1,6 +1,7 @@
 package controllers;
 
 import daos.EntregadorDAO;
+import daos.GerenciadorEntregasDAO;
 import daos.PedidoDAO;
 import models.Cliente;
 import models.Entregador;
@@ -21,6 +22,7 @@ public class PedidoController {
     GerenciadorEntregasController gerenciadorEntregasController = new GerenciadorEntregasController();
     Status status;
 
+    GerenciadorEntregasDAO gerenciadorEntregasDAO = new GerenciadorEntregasDAO(connection);
     EntregadorDAO entregadorDAO = new EntregadorDAO(connection);
 
     public PedidoController() throws SQLException {
@@ -87,10 +89,9 @@ public class PedidoController {
         Entregador entregador = new Entregador();
         if (entregadorController.verificaEntregadorPorRegiao(cliente.getRegiao())) {
             entregador = gerenciadorEntregasController.definiEntregador(entregadorController.verificaEntregadoresHabilitados(cliente.getRegiao(), restricao_idade, "Moto"), verificaPrioridade(cliente));
-            System.out.println(entregador.getId());
             Pedido pedidoRegistrado = new Pedido(cliente, entregador, lista_itens, valor_pedido, cliente.getRegiao(), restricao_idade, veiculo, valor_total, status.ABERTO);
-            gerenciadorEntregasController.adicionaPedidoNaFila(pedidoRegistrado, verificaPrioridade(cliente));
             pedidoDAO.salvar(pedidoRegistrado);
+            gerenciadorEntregasController.adicionaPedidoNaFila(gerenciadorEntregasDAO.buscaPedidoPeloId(pedidoRegistrado.getId()), verificaPrioridade(cliente));
             JOptionPane.showMessageDialog(null ,"Pedido registrado com sucesso");
         }
     }

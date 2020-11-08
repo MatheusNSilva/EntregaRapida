@@ -73,11 +73,13 @@ public class ClienteDAO {
         return cliente;
     }
 
-    public Cliente buscaClientePorId(int id) throws SQLException {
+    public Cliente buscaClientePorId(int id) throws SQLException, ClassNotFoundException {
         String sql = "SELECT * FROM Cliente WHERE id = ?";
         Cliente cliente = new Cliente();
 
-        try(PreparedStatement pstm = connection.prepareStatement(sql)) {
+        try {
+            connection = ConnectionFactory.recuperaConexao();
+            PreparedStatement pstm = connection.prepareStatement(sql);
             pstm.setInt(1, id);
             pstm.execute();
 
@@ -89,26 +91,13 @@ public class ClienteDAO {
                     }
                 }
             }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
         }
-        catch (SQLException ex) {
-            ex.printStackTrace();
+        finally {
+            ConnectionFactory.fechaConexao(connection);
         }
 
         return cliente;
     }
 
-    /*public void transformaResultEmCliente(Cliente cliente ,PreparedStatement pstm) throws SQLException {
-        try (ResultSet rst = pstm.getResultSet()) {
-            if (rst != null) {
-                while (rst.next()) {
-                    cliente = new Cliente(rst.getInt(1),rst.getString(2), rst.getString(3), rst.getTimestamp(4),rst.getBoolean(5),
-                            rst.getString(6), rst.getString(7), rst.getString(8), rst.getInt(9));
-                }
-            }
-        }
-    }*/
 }
 

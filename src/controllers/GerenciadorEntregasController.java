@@ -1,17 +1,37 @@
 package controllers;
 
+import daos.GerenciadorEntregasDAO;
 import models.Entregador;
 import models.Pedido;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GerenciadorEntregasController {
 
+    Connection connection;
+    GerenciadorEntregasDAO gerenciadorEntregasDAO = new GerenciadorEntregasDAO(connection);
     List<Pedido> lista_comum = new ArrayList<Pedido>();
     List<Pedido> lista_prioritaria = new ArrayList<Pedido>();
 
     public GerenciadorEntregasController() {
+    }
+
+    public List<Pedido> retornaLista(){
+        return lista_prioritaria;
+    }
+
+    public void povoaListas() throws SQLException, ClassNotFoundException {
+        List<Pedido> todosPedidos = gerenciadorEntregasDAO.listaTodos();
+        for (int posicao = 0; todosPedidos.size() > posicao; posicao++) {
+            if (todosPedidos.get(posicao).getCliente().isPrioritario() == true) {
+                lista_prioritaria.add(todosPedidos.get(posicao));
+            } else {
+                lista_comum.add(todosPedidos.get(posicao));
+            }
+        }
     }
 
     public void adicionaPedidoNaFila(Pedido pedido, boolean prioridade) {

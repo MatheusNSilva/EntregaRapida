@@ -31,13 +31,14 @@ public class Pedido {
         this.status = status;
     }
 
-    public Pedido(int id, Cliente cliente, Entregador entregador, String lista_itens, float valor_pedido, String regiao, boolean restricao_idade, String veiculo, float valor_total, Status status) {
+    public Pedido(int id, Cliente cliente, Entregador entregador, String lista_itens,  boolean restricao_idade, Timestamp registro_lancamento, String regiao, Status status, String veiculo, float valor_pedido, float valor_total) {
         this.id = id;
         this.cliente = cliente;
         this.entregador = entregador;
         this.lista_itens = lista_itens;
         this.valor_pedido = valor_pedido;
         this.regiao = regiao;
+        this.registro_lancamento = registro_lancamento;
         this.restricao_idade = restricao_idade;
         this.veiculo = veiculo;
         this.valor_total = valor_total;
