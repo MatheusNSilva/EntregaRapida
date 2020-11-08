@@ -15,7 +15,6 @@ public class PedidoDAO {
     private Connection connection;
     private ClienteDAO clienteDAO = new ClienteDAO(connection);
     private EntregadorDAO entregadorDAO = new EntregadorDAO(connection);
-    //private PedidoDAO pedidoDAO = new PedidoDAO(connection);
 
     public PedidoDAO(Connection connection) throws SQLException {
         this.connection = connection;

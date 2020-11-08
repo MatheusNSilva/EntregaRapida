@@ -6,6 +6,7 @@
 
 package models;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
@@ -16,7 +17,7 @@ public class Cliente {
     private int id;
     private String nome;
     private String cpf;
-    private Timestamp idade;
+    private Date idade;
     private boolean prioritario;
     private String endereco;
     private String telefone;
@@ -26,7 +27,7 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(String nome, String cpf, Timestamp idade, boolean prioritario, String endereco, String telefone, String regiao, int total_pedidos) {
+    public Cliente(String nome, String cpf, Date idade, boolean prioritario, String endereco, String telefone, String regiao, int total_pedidos) {
         this.nome = nome;
         this.cpf = cpf;
         this.idade = idade;
@@ -37,7 +38,7 @@ public class Cliente {
         this.total_pedidos = total_pedidos;
     }
 
-    public Cliente(int id, String nome, String cpf, Timestamp idade, boolean prioritario, String endereco, String telefone, String regiao, int total_pedidos) {
+    public Cliente(int id, String nome, String cpf, Date idade, boolean prioritario, String endereco, String telefone, String regiao, int total_pedidos) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
@@ -73,11 +74,11 @@ public class Cliente {
         this.cpf = cpf;
     }
 
-    public Timestamp getIdade() {
+    public Date getIdade() {
         return idade;
     }
 
-    public void setIdade(Timestamp idade) {
+    public void setIdade(Date idade) {
         this.idade = idade;
     }
 

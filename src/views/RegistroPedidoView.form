@@ -15,7 +15,7 @@
           </grid>
         </constraints>
         <properties>
-          <text value="Digite um CPF válido"/>
+          <text value=""/>
         </properties>
       </component>
       <component id="42c8e" class="javax.swing.JButton" binding="btnBuscarCliente">

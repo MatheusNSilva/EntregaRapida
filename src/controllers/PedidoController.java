@@ -1,11 +1,13 @@
 package controllers;
 
+import daos.EntregadorDAO;
 import daos.PedidoDAO;
 import models.Cliente;
 import models.Entregador;
 import models.Pedido;
 import models.Status;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,6 +20,8 @@ public class PedidoController {
     EntregadorController entregadorController = new EntregadorController();
     GerenciadorEntregasController gerenciadorEntregasController = new GerenciadorEntregasController();
     Status status;
+
+    EntregadorDAO entregadorDAO = new EntregadorDAO(connection);
 
     public PedidoController() throws SQLException {
     }
@@ -82,11 +86,12 @@ public class PedidoController {
         float valor_total = definiValorTotal(valor_pedido, cliente);
         Entregador entregador = new Entregador();
         if (entregadorController.verificaEntregadorPorRegiao(cliente.getRegiao())) {
-            entregador = gerenciadorEntregasController.definiEntregador(entregadorController.verificaEntregadoresHabilitados(cliente.getRegiao(), restricao_idade, veiculo), verificaPrioridade(cliente));
+            entregador = gerenciadorEntregasController.definiEntregador(entregadorController.verificaEntregadoresHabilitados(cliente.getRegiao(), restricao_idade, "Moto"), verificaPrioridade(cliente));
+            System.out.println(entregador.getId());
             Pedido pedidoRegistrado = new Pedido(cliente, entregador, lista_itens, valor_pedido, cliente.getRegiao(), restricao_idade, veiculo, valor_total, status.ABERTO);
             gerenciadorEntregasController.adicionaPedidoNaFila(pedidoRegistrado, verificaPrioridade(cliente));
             pedidoDAO.salvar(pedidoRegistrado);
-            System.out.println("Foi meu querido");
+            JOptionPane.showMessageDialog(null ,"Pedido registrado com sucesso");
         }
     }
 

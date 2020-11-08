@@ -23,7 +23,7 @@ public class ClienteDAO {
 
             pstm.setString(1, cliente.getNome());
             pstm.setString(2, cliente.getCpf());
-            pstm.setTimestamp(3, cliente.getIdade());
+            pstm.setDate(3, cliente.getIdade());
             pstm.setBoolean(4, cliente.isPrioritario());
             pstm.setString(5, cliente.getEndereco());
             pstm.setString(6, cliente.getTelefone());
@@ -59,7 +59,7 @@ public class ClienteDAO {
             try(ResultSet rst = pstm.getResultSet()){
                     if (rst != null) {
                         while (rst.next()) {
-                            cliente = new Cliente(rst.getInt(1),rst.getString(2), rst.getString(3), rst.getTimestamp(4),rst.getBoolean(5),
+                            cliente = new Cliente(rst.getInt(1),rst.getString(2), rst.getString(3), rst.getDate(4),rst.getBoolean(5),
                                     rst.getString(6), rst.getString(7), rst.getString(8), rst.getInt(9));
                         }
                     }
@@ -84,7 +84,7 @@ public class ClienteDAO {
             try(ResultSet rst = pstm.getResultSet()){
                 if (rst != null) {
                     while (rst.next()) {
-                        cliente = new Cliente(rst.getInt(1),rst.getString(2), rst.getString(3), rst.getTimestamp(4),rst.getBoolean(5),
+                        cliente = new Cliente(rst.getInt(1),rst.getString(2), rst.getString(3), rst.getDate(4),rst.getBoolean(5),
                                 rst.getString(6), rst.getString(7), rst.getString(8), rst.getInt(9));
                     }
                 }

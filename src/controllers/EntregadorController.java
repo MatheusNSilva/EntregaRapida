@@ -35,6 +35,7 @@ public class EntregadorController {
         }
 
         if(entregadoresHabilitados.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Não existe entregador habilitado para essa entrega!");
             throw new Exception("Não existe entregador habilitado para esta entrega");
         }
         else {
